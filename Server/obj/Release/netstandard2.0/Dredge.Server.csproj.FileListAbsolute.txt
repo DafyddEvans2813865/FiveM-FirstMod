@@ -1,0 +1,10 @@
+C:\Users\evans\Dredge\Server\bin\Release\netstandard2.0\Dredge.Server.deps.json
+C:\Users\evans\Dredge\Server\bin\Release\netstandard2.0\Dredge.Server.net.dll
+C:\Users\evans\Dredge\Server\bin\Release\netstandard2.0\Dredge.Server.net.pdb
+C:\Users\evans\Dredge\Server\obj\Release\netstandard2.0\Dredge.Server.csproj.AssemblyReference.cache
+C:\Users\evans\Dredge\Server\obj\Release\netstandard2.0\Dredge.Server.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\evans\Dredge\Server\obj\Release\netstandard2.0\Dredge.Server.AssemblyInfoInputs.cache
+C:\Users\evans\Dredge\Server\obj\Release\netstandard2.0\Dredge.Server.AssemblyInfo.cs
+C:\Users\evans\Dredge\Server\obj\Release\netstandard2.0\Dredge.Server.csproj.CoreCompileInputs.cache
+C:\Users\evans\Dredge\Server\obj\Release\netstandard2.0\Dredge.Server.net.dll
+C:\Users\evans\Dredge\Server\obj\Release\netstandard2.0\Dredge.Server.net.pdb

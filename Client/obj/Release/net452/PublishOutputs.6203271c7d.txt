@@ -1,0 +1,2 @@
+C:\Users\evans\Dredge\Client\bin\Release\net452\publish\Dredge.Client.net.dll
+C:\Users\evans\Dredge\Client\bin\Release\net452\publish\CitizenFX.Core.Client.dll

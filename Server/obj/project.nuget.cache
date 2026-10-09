@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "CqdcfnaD2R4=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\evans\\Dredge\\Server\\Dredge.Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\evans\\.nuget\\packages\\citizenfx.core.server\\1.0.26803\\citizenfx.core.server.1.0.26803.nupkg.sha512",
+    "C:\\Users\\evans\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\evans\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\evans\\Dredge\\Client\\Dredge.Client.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\evans\\Dredge\\Client\\Dredge.Client.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\evans\\Dredge\\Client\\Dredge.Client.csproj",
+        "projectName": "Dredge.Client",
+        "projectPath": "C:\\Users\\evans\\Dredge\\Client\\Dredge.Client.csproj",
+        "packagesPath": "C:\\Users\\evans\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\evans\\Dredge\\Client\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\evans\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net452"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net452": {
+            "targetAlias": "net452",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net452": {
+          "targetAlias": "net452",
+          "dependencies": {
+            "CitizenFX.Core.Client": {
+              "target": "Package",
+              "version": "[1.0.*, )"
+            },
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "downloadDependencies": [
+            {
+              "name": "CitizenFX.Framework.Client",
+              "version": "[0.2.3, 0.2.3]"
+            }
+          ],
+          "frameworkReferences": {
+            "CitizenFX.Framework.Client": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.425\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

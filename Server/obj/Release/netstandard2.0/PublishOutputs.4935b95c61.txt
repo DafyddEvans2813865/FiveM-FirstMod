@@ -1,0 +1,4 @@
+C:\Users\evans\Dredge\Server\bin\Release\netstandard2.0\publish\Dredge.Server.net.dll
+C:\Users\evans\Dredge\Server\bin\Release\netstandard2.0\publish\Dredge.Server.deps.json
+C:\Users\evans\Dredge\Server\bin\Release\netstandard2.0\publish\Dredge.Server.net.pdb
+C:\Users\evans\Dredge\Server\bin\Release\netstandard2.0\publish\CitizenFX.Core.Server.dll
