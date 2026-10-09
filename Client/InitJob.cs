@@ -6,9 +6,9 @@ using static CitizenFX.Core.Native.API;
 
 namespace DredgeClient
 {
-    public class Class1 : BaseScript
+    public class InitJob : BaseScript
     {
-        public Class1()
+        public InitJob()
         {
             EventHandlers["onClientResourceStart"] += new Action<string>(OnClientResourceStart);
         }
@@ -16,50 +16,13 @@ namespace DredgeClient
         private void OnClientResourceStart(string resourceName)
         {
             if (GetCurrentResourceName() != resourceName) return;
-
-            RegisterCommand("car", new Action<int, List<object>, string>(async (source, args, raw) =>
-            {
-                // account for the argument not being passed
-                var model = "adder";
-                if (args.Count > 0)
-                {
-                    model = args[0].ToString();
-                }
-
-                // check if the model actually exists
-                // assumes the directive `using static CitizenFX.Core.Native.API;`
-                var hash = (uint) GetHashKey(model);
-                if (!IsModelInCdimage(hash) || !IsModelAVehicle(hash))
-                {
-                    TriggerEvent("chat:addMessage", new
-                    {
-                        color = new[] { 255, 0, 0 },
-                        args = new[] { "[CarSpawner]", $"It might have been a good thing that you tried to spawn a {model}. Who even wants their spawning to actually ^*succeed?" }
-                    });
-                    return;
-                }
-
-                // create the vehicle
-                var vehicle = await World.CreateVehicle(model, Game.PlayerPed.Position, Game.PlayerPed.Heading);
-
-                // set the player ped into the vehicle and driver seat
-                Game.PlayerPed.SetIntoVehicle(vehicle, VehicleSeat.Driver);
-
-                // tell the player
-                TriggerEvent("chat:addMessage", new
-                {
-                    color = new[] {255, 0, 0},
-                    args = new[] {"[CarSpawner]", $"Woohoo! Enjoy your new ^*{model}!"}
-                });
-            }), false);
-
+            
             //TO-DO REMOVE LATER 
             RegisterCommand("Docks", new Action(async () => await ToDock()), false);
-            RegisterCommand("Atmo", new Action(async () => await setAtmosphere()), false);
-            RegisterCommand("ClearAtmo", new Action(async () => await clearAtmosphere()), false);
+            RegisterCommand("Atmo", new Action( () => setAtmosphere()), false);
+            RegisterCommand("ClearAtmo", new Action( () => clearAtmosphere()), false);
             RegisterCommand("FishCounter", new Action(async () => await DrawFishCount()), false);
             //END OF TO-DO 
-
 
             RegisterCommand("Start", new Action(async () => await StartJob()), false);
         }
@@ -72,19 +35,18 @@ namespace DredgeClient
                 var Boat = await World.CreateVehicle("tug", pos, 120);
                 Game.PlayerPed.SetIntoVehicle(Boat, VehicleSeat.Driver);
                 
-                //Speed up boat a little 
+                //DEBUG -> Speed up boat a little 
                 SetVehicleEnginePowerMultiplier(Boat.Handle,1000.0f);
         }
 
-        private async Task setAtmosphere()
+        private void setAtmosphere()
         {
             NetworkOverrideClockTime(2,0,0);
             SetWeatherTypeNowPersist("FOGGY");
             SetTimecycleModifier("nervousRON_fog");
-
         }
 
-        private async Task  clearAtmosphere()
+        private void clearAtmosphere()
         {
             NetworkOverrideClockTime(12,0,0);
             ClearTimecycleModifier();
@@ -109,10 +71,10 @@ namespace DredgeClient
 
         public async Task StartJob(){
             setAtmosphere();
-            ToDock();
-            DrawFishCount();
-        }
+            await ToDock();
+            _ = DrawFishCount(); //as forever loop needs to be a background operation 
 
+        }
 
     }
 

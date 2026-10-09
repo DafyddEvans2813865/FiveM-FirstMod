@@ -8,3 +8,4 @@ C:\Users\evans\Dredge\Server\obj\Release\netstandard2.0\Dredge.Server.AssemblyIn
 C:\Users\evans\Dredge\Server\obj\Release\netstandard2.0\Dredge.Server.csproj.CoreCompileInputs.cache
 C:\Users\evans\Dredge\Server\obj\Release\netstandard2.0\Dredge.Server.net.dll
 C:\Users\evans\Dredge\Server\obj\Release\netstandard2.0\Dredge.Server.net.pdb
+C:\Users\evans\Dredge\Server\obj\Release\netstandard2.0\Dredge.Server.sourcelink.json
