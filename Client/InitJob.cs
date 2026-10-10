@@ -27,8 +27,6 @@ namespace DredgeClient
             RegisterCommand("Start", new Action(async () => await StartJob()), false);
         }
 
-
-        
         private async Task ToDock()
         {
                 var pos = new Vector3(-813.49f, -1485.70f, 0.0f);
