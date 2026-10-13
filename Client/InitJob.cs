@@ -16,7 +16,7 @@ namespace DredgeClient
         private void OnClientResourceStart(string resourceName)
         {
             if (GetCurrentResourceName() != resourceName) return;
-            
+
             //TO-DO REMOVE LATER 
             RegisterCommand("Docks", new Action(async () => await ToDock()), false);
             RegisterCommand("Atmo", new Action( () => setAtmosphere()), false);
@@ -37,6 +37,7 @@ namespace DredgeClient
                 SetVehicleEnginePowerMultiplier(Boat.Handle,1000.0f);
         }
 
+        //T0-DO change to call effects 
         private void setAtmosphere()
         {
             NetworkOverrideClockTime(2,0,0);
@@ -44,6 +45,7 @@ namespace DredgeClient
             SetTimecycleModifier("nervousRON_fog");
         }
 
+        //T0-DO change to call effects 
         private void clearAtmosphere()
         {
             NetworkOverrideClockTime(12,0,0);
