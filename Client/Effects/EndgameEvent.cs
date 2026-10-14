@@ -6,12 +6,12 @@ using static CitizenFX.Core.Native.API;
 namespace DredgeClient.Effects
 {
 
-    public class EndgameSequence : BaseScript
+    public class EndgameEvent : BaseScript
     {
         private float _overlayAlpha;   // 0..255
         private string _overlayText = "";
 
-        public EndgameSequence()
+        public EndgameEvent()
         {
             EventHandlers["dredge:runEndgame"] += new Action(() =>
             {
