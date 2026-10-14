@@ -6,12 +6,12 @@ using static CitizenFX.Core.Native.API;
 namespace DredgeClient.Effects
 {
 
-    public class EndgameSequence : BaseScript
+    public class EndgameEvent : BaseScript
     {
         private float _overlayAlpha;   // 0..255
         private string _overlayText = "";
 
-        public EndgameSequence()
+        public EndgameEvent()
         {
             EventHandlers["dredge:runEndgame"] += new Action(() =>
             {
@@ -20,7 +20,7 @@ namespace DredgeClient.Effects
             Tick += DrawOverlay;
         }
 
-        private async Task Run()
+        public async Task Run()
         {
             int ped = PlayerPedId();
             int boat = IsPedInAnyBoat(ped) ? GetVehiclePedIsIn(ped, false) : 0;

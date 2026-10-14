@@ -11,7 +11,7 @@ namespace DredgeClient
         public InitJob()
         {
             EventHandlers["onClientResourceStart"] += new Action<string>(OnClientResourceStart);
-            EventHandlers["dredge:spawnBoat"] += new Func<Task>(ToDock);
+            EventHandlers["dredge:spawnBoat"] += new Func<Task>(StartJob);
         }
 
         private void OnClientResourceStart(string resourceName)
@@ -21,7 +21,6 @@ namespace DredgeClient
             //TO-DO REMOVE LATER 
             RegisterCommand("Docks", new Action(async () => await ToDock()), false);
             RegisterCommand("Atmo", new Action(() => setAtmosphere()), false);
-            RegisterCommand("FishCounter", new Action(async () => await DrawFishCount()), false);
             //END OF TO-DO 
 
             RegisterCommand("Start", new Action(async () => await StartJob()), false);
@@ -44,30 +43,10 @@ namespace DredgeClient
             SetTimecycleModifier("nervousRON_fog");
         }
 
-        public async Task DrawFishCount()
-        {
-
-            int fishCount = 0;
-
-            while (true)
-            {
-                SetTextScale(0.6f, 0.6f);
-                SetTextColour(255, 255, 255, 255);
-                SetTextFont(4);
-                BeginTextCommandDisplayText("STRING");
-                AddTextComponentSubstringPlayerName($"Fish: {fishCount}");
-                EndTextCommandDisplayText(0.05f, 0.05f);
-                await Delay(500);
-                fishCount++;
-            }
-        }
-
         public async Task StartJob()
         {
             setAtmosphere();
             await ToDock();
-            _ = DrawFishCount(); //as forever loop needs to be a background operation 
-
         }
 
     }

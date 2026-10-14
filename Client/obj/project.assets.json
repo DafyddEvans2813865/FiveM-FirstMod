@@ -384,19 +384,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/dafyddmorganevans/.nuget/packages/": {}
+    "C:\\Users\\evans\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/dafyddmorganevans/Documents/GitHub/FiveM-FirstMod/Client/Dredge.Client.csproj",
+      "projectUniqueName": "C:\\Users\\evans\\Dredge\\Client\\Dredge.Client.csproj",
       "projectName": "Dredge.Client",
-      "projectPath": "/Users/dafyddmorganevans/Documents/GitHub/FiveM-FirstMod/Client/Dredge.Client.csproj",
-      "packagesPath": "/Users/dafyddmorganevans/.nuget/packages/",
-      "outputPath": "/Users/dafyddmorganevans/Documents/GitHub/FiveM-FirstMod/Client/obj/",
+      "projectPath": "C:\\Users\\evans\\Dredge\\Client\\Dredge.Client.csproj",
+      "packagesPath": "C:\\Users\\evans\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\evans\\Dredge\\Client\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/dafyddmorganevans/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\evans\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net452"
@@ -414,6 +414,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -442,7 +447,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.410/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.425\\RuntimeIdentifierGraph.json"
       }
     }
   }
