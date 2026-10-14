@@ -11,6 +11,7 @@ namespace DredgeClient
         public InitJob()
         {
             EventHandlers["onClientResourceStart"] += new Action<string>(OnClientResourceStart);
+            EventHandlers["dredge:spawnBoat"] += new Func<Task>(ToDock);
         }
 
         private void OnClientResourceStart(string resourceName)
@@ -28,8 +29,7 @@ namespace DredgeClient
 
         private async Task ToDock()
         {
-            var pos = new Vector3(-813.49f, -1485.70f, 0.0f);
-            var Boat = await World.CreateVehicle("tug", pos, 120);
+            var Boat = await World.CreateVehicle("tug", GameState.DockPos, 120);
             Game.PlayerPed.SetIntoVehicle(Boat, VehicleSeat.Driver);
 
             //DEBUG -> Speed up boat a little 
