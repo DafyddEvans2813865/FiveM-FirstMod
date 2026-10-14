@@ -14,12 +14,6 @@ namespace DredgeClient.Effects
             StopGameplayCamShaking(true);
         }
 
-        
-        //TO-DO:Create different shake types for different Scares
-        public static async Task Jolt(float intensity, int duration)
-        {
-            await CameraFx.ShakeCamera("SMALL_EXPLOSION_SHAKE", intensity, duration);   
-        }
     }
 
 

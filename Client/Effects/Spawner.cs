@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using static CitizenFX.Core.Native.API;
@@ -6,8 +7,12 @@ namespace DredgeClient.Effects
 {
     public static class Spawner
     {
+
+        private static readonly List<int> Spawned = new List<int>();
+
         public static async Task<int> Spawn(string model, Vector3 position, float heading = 0f)
         {
+
             //check model exists
             uint hash = (uint)GetHashKey(model);
             if (!IsModelInCdimage(hash)) return 0;
@@ -29,6 +34,7 @@ namespace DredgeClient.Effects
             SetEntityCollision(entity, false, false); // pass through
             SetModelAsNoLongerNeeded(hash);
 
+            Spawned.Add(entity);
             return entity;
         }
 
@@ -62,6 +68,16 @@ namespace DredgeClient.Effects
 
             if (deleteAtEnd && DoesEntityExist(entity))
                 DeleteEntity(ref entity);
+        }
+
+        public static void ClearAll()
+        {
+            foreach (int e in Spawned)
+            {
+                int ent = e;
+                if (DoesEntityExist(ent)) DeleteEntity(ref ent);
+            }
+            Spawned.Clear();
         }
     }
 
