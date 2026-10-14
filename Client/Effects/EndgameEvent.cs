@@ -20,7 +20,7 @@ namespace DredgeClient.Effects
             Tick += DrawOverlay;
         }
 
-        private async Task Run()
+        public async Task Run()
         {
             int ped = PlayerPedId();
             int boat = IsPedInAnyBoat(ped) ? GetVehiclePedIsIn(ped, false) : 0;

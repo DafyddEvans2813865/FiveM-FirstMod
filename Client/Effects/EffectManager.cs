@@ -50,7 +50,7 @@ namespace DredgeClient.Effects
                     WorldState.SetBlackout(false);
                 }},
 
-                new ScareEvent { Name = "enginecut", Weight = 3, Run = boat => WorldState.KillEngine(boat, 3000) },
+                new ScareEvent { Name = "enginecut", Weight = 3, Run = boat => WorldState.KillEngine(boat, 6000) },
                 new ScareEvent { Name = "lightscut", Weight = 3, Run = boat => WorldState.KillLights(boat, 4000) },
  
                 // blackout + something out there
@@ -59,12 +59,12 @@ namespace DredgeClient.Effects
                     WorldState.SetBlackout(true);
                     await Task.WhenAll(
                         WorldState.FlickerLight(Offset(boat, -40, 100, 3), 8000, 120, 255, 140, 30f, 12f), // sickly green
-                        WorldState.KillEngine(boat, 5000));
+                        WorldState.KillEngine(boat, 6000));
                     WorldState.SetBlackout(false);
                 }},
 
-                new ScareEvent { Name = "jolt", Weight = 4, Run = boat => CameraFx.ShakeCamera("JOLT_SHAKE", 1.5f, 600) },
-                new ScareEvent { Name = "tremor", Weight = 2, Run = boat => CameraFx.ShakeCamera("VIBRATE_SHAKE", 0.8f, 3000) },      
+                new ScareEvent { Name = "jolt", Weight = 4, Run = boat => CameraFx.ShakeCamera("JOLT_SHAKE", 1.5f, 1000) },
+                new ScareEvent { Name = "tremor", Weight = 2, Run = boat => CameraFx.ShakeCamera("VIBRATE_SHAKE", 0.8f, 5000) },      
 
                 // hull hit + engine dies
                 new ScareEvent { Name = "impact", Weight = 2, Run = boat => Task.WhenAll( CameraFx.ShakeCamera("MEDIUM_EXPLOSION_SHAKE", 1f, 800), WorldState.KillEngine(boat, 4000)) },

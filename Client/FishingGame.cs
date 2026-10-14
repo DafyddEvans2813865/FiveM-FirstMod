@@ -31,6 +31,8 @@ namespace DredgeClient
         private float _zoneWidth;      // 0..1
 
         private string _resultText = "";
+        private int _hitCount;
+        private int _requiredHits;
 
         public int FishCaught { get; private set; }
         private bool _regionDepleted;
@@ -96,7 +98,7 @@ namespace DredgeClient
                     }
                     UpdateMarker(dt);
                     DrawBar();
-                    DrawText2D("[E] Hook it!", 0.5f, 0.90f, 0.40f);
+                    DrawText2D($"[E] Hook it!", 0.5f, 0.90f, 0.40f);
                     if (IsControlJustPressed(0, KeyAction))
                     {
                         bool hit = Math.Abs(_markerPos - _zoneCentre) <= _zoneWidth / 2f;
@@ -132,6 +134,8 @@ namespace DredgeClient
 
         private void StartWaiting()
         {
+            _hitCount = 0;
+            _requiredHits = _rng.Next(1, 6);
             _state = State.Waiting;
             _timer = 2f + (float)_rng.NextDouble() * 3f; // 2-5s bite delay
         }
@@ -139,7 +143,11 @@ namespace DredgeClient
         private void StartReeling()
         {
             _state = State.Reeling;
+            SetReelingTarget();
+        }
 
+        private void SetReelingTarget()
+        {
             // Gets harder as you catch more
             float difficulty = Math.Min(FishCaught * 0.05f, 0.5f);
             _zoneWidth = Math.Max(0.18f - difficulty * 0.2f, 0.08f);
@@ -162,11 +170,22 @@ namespace DredgeClient
         {
             if (hit)
             {
-                FishCaught++;
-                _regionFished++;
-                if (_regionFished >= MaxFishPerRegion) _regionDepleted = true;
-                _resultText = "Caught something...";
-                TriggerEvent("dredge:fishCaught", FishCaught);
+                _hitCount++;
+
+                if (_hitCount >= _requiredHits)
+                {
+                    FishCaught++;
+                    _regionFished++;
+                    if (_regionFished >= MaxFishPerRegion) _regionDepleted = true;
+                    _resultText = "Caught something...";
+                    TriggerEvent("dredge:fishCaught", FishCaught);
+                }
+                else
+                {
+                    _resultText = $"Keep going! {_hitCount}/{_requiredHits}"; //TO-DO Remove this before finshed
+                    SetReelingTarget();
+                    return;
+                }
             }
             else
             {
