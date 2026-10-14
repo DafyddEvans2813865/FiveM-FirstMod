@@ -1,0 +1,10 @@
+C:\Users\evans\Dredge\Client\obj\Debug\net452\Dredge.Client.csproj.AssemblyReference.cache
+C:\Users\evans\Dredge\Client\obj\Debug\net452\Dredge.Client.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\evans\Dredge\Client\obj\Debug\net452\Dredge.Client.AssemblyInfoInputs.cache
+C:\Users\evans\Dredge\Client\obj\Debug\net452\Dredge.Client.AssemblyInfo.cs
+C:\Users\evans\Dredge\Client\obj\Debug\net452\Dredge.Client.csproj.CoreCompileInputs.cache
+C:\Users\evans\Dredge\Client\obj\Debug\net452\Dredge.Client.sourcelink.json
+C:\Users\evans\Dredge\Client\bin\Debug\net452\Dredge.Client.net.dll
+C:\Users\evans\Dredge\Client\bin\Debug\net452\CitizenFX.Core.Client.dll
+C:\Users\evans\Dredge\Client\obj\Debug\net452\Dredge.C.7F1F976F.Up2Date
+C:\Users\evans\Dredge\Client\obj\Debug\net452\Dredge.Client.net.dll

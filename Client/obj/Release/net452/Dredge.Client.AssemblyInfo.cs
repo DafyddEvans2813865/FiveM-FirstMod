@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Dredge.Client")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f75b136971971715ff046d10f0fccdfd23bdd45b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba9ef5dfe6d63f397d8a0a771bbf7cf0489c5f1f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Dredge.Client")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Dredge.Client")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

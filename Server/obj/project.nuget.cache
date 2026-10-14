@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "cEbTYYDy2xjIogImxewisME+eCjcp84r4eiqZlQRBMSRmdOnLXF1nxfrWWN0bBF68BBLMFJzqbLX3mumq3D63w==",
+  "dgSpecHash": "CqdcfnaD2R4=",
   "success": true,
-  "projectFilePath": "/Users/dafyddmorganevans/Documents/GitHub/FiveM-FirstMod/Server/Dredge.Server.csproj",
+  "projectFilePath": "C:\\Users\\evans\\Dredge\\Server\\Dredge.Server.csproj",
   "expectedPackageFiles": [
-    "/Users/dafyddmorganevans/.nuget/packages/citizenfx.core.server/1.0.26803/citizenfx.core.server.1.0.26803.nupkg.sha512",
-    "/Users/dafyddmorganevans/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "/Users/dafyddmorganevans/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512"
+    "C:\\Users\\evans\\.nuget\\packages\\citizenfx.core.server\\1.0.26803\\citizenfx.core.server.1.0.26803.nupkg.sha512",
+    "C:\\Users\\evans\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\evans\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
   ],
   "logs": []
 }

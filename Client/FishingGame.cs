@@ -15,10 +15,14 @@ namespace DredgeClient
 
         // Bar layout in screen space
         private const float BarX = 0.5f, BarY = 0.85f, BarW = 0.30f, BarH = 0.025f;
+        private const int MaxFishPerRegion = 3;
+        private const float FishingRegionRadius = 50f;
 
         private readonly Random _rng = new Random();
         private State _state = State.Idle;
         private float _timer;
+        private Vector3 _regionCentre;
+        private bool _hasRegionCentre;
 
         private float _markerPos;      // 0..1 along the bar
         private float _markerDir = 1f;
@@ -29,6 +33,8 @@ namespace DredgeClient
         private string _resultText = "";
 
         public int FishCaught { get; private set; }
+        private bool _regionDepleted;
+        private int _regionFished;
 
         public FishingGame()
         {
@@ -42,7 +48,10 @@ namespace DredgeClient
             Ped ped = Game.PlayerPed;
             Vehicle boat = ped.CurrentVehicle;
             bool inBoat = ped.IsInBoat && boat != null;
-            bool canFish = inBoat && boat.Speed < 2f; //nearly stopped
+
+            if (inBoat) UpdateFishingRegion(boat.Position);
+
+            bool canFish = inBoat && boat.Speed < 2f && !_regionDepleted; //nearly stopped
 
             if (inBoat)
             {
@@ -53,11 +62,15 @@ namespace DredgeClient
             {
                 DisableControlAction(0, KeyHorn, true); //disable horn
             }
-
+                
             switch (_state)
             {
                 case State.Idle:
-                    if (canFish)
+                    if (_regionDepleted)
+                    {
+                        DrawText2D("Fishing region depleted", 0.5f, 0.90f, 0.40f);
+                    }
+                    else if (canFish)
                     {
                         DrawText2D("[E] Cast line", 0.5f, 0.90f, 0.40f);
                         if (IsControlJustPressed(0, KeyAction)) StartWaiting();
@@ -103,6 +116,20 @@ namespace DredgeClient
 
         // Logic 
 
+        private void UpdateFishingRegion(Vector3 boatPosition)
+        {
+            bool movedToNewRegion = !_hasRegionCentre
+                || Vector3.DistanceSquared(boatPosition, _regionCentre)
+                    > FishingRegionRadius * FishingRegionRadius;
+
+            if (!movedToNewRegion) return;
+
+            _regionCentre = boatPosition;
+            _hasRegionCentre = true;
+            _regionFished = 0;
+            _regionDepleted = false;
+        }
+
         private void StartWaiting()
         {
             _state = State.Waiting;
@@ -136,6 +163,8 @@ namespace DredgeClient
             if (hit)
             {
                 FishCaught++;
+                _regionFished++;
+                if (_regionFished >= MaxFishPerRegion) _regionDepleted = true;
                 _resultText = "Caught something...";
                 TriggerEvent("dredge:fishCaught", FishCaught);
             }

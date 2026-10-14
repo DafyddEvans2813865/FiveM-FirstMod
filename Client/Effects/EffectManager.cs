@@ -13,6 +13,7 @@ namespace DredgeClient.Effects
         {
             public string Name;
             public int Weight;           // higher -> more often
+            public int dredge; //level of dread to trigger this event (0 = any, 100 = only at max dread)
             public Func<int, Task> Run;
         }
 

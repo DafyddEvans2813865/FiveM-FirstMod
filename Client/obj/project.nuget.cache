@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "QyEkcrOyvUu3CF5O0Htawiekh/4ZTVRKOo30Qy1MeaN5JDjeJejOb/X4UJld7IZuJJX8zBeCOthFbMfnjwcaSw==",
+  "dgSpecHash": "4Aq5N0iL69w=",
   "success": true,
-  "projectFilePath": "/Users/dafyddmorganevans/Documents/GitHub/FiveM-FirstMod/Client/Dredge.Client.csproj",
+  "projectFilePath": "C:\\Users\\evans\\Dredge\\Client\\Dredge.Client.csproj",
   "expectedPackageFiles": [
-    "/Users/dafyddmorganevans/.nuget/packages/citizenfx.core.client/1.0.26803/citizenfx.core.client.1.0.26803.nupkg.sha512",
-    "/Users/dafyddmorganevans/.nuget/packages/microsoft.netframework.referenceassemblies/1.0.3/microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
-    "/Users/dafyddmorganevans/.nuget/packages/microsoft.netframework.referenceassemblies.net452/1.0.3/microsoft.netframework.referenceassemblies.net452.1.0.3.nupkg.sha512",
-    "/Users/dafyddmorganevans/.nuget/packages/citizenfx.framework.client/0.2.3/citizenfx.framework.client.0.2.3.nupkg.sha512"
+    "C:\\Users\\evans\\.nuget\\packages\\citizenfx.core.client\\1.0.26803\\citizenfx.core.client.1.0.26803.nupkg.sha512",
+    "C:\\Users\\evans\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.3\\microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
+    "C:\\Users\\evans\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net452\\1.0.3\\microsoft.netframework.referenceassemblies.net452.1.0.3.nupkg.sha512",
+    "C:\\Users\\evans\\.nuget\\packages\\citizenfx.framework.client\\0.2.3\\citizenfx.framework.client.0.2.3.nupkg.sha512"
   ],
   "logs": []
 }

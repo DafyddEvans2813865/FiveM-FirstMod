@@ -4,14 +4,14 @@ using CitizenFX.Core;
 using CitizenFX.Core.UI;
 using static CitizenFX.Core.Native.API;
 
-namespace DredgeJam.Client
+namespace DredgeClient
 {
 
     /// Catch = small relief, miss = small spike. Reaching the dock resets it and sells the catch.
     public class DreadMeter : BaseScript
     {
-        // time at sea alone: 0 -> 100 in ~6.5 min
-        private const float RisePerSecond = 0.25f;
+        // time at sea alone: 0 -> 100 in ~4.5 min
+        private const float RisePerSecond = 0.35f;
         private const float EventRisePerSecond = 1.0f;  // extra while witnessing an event
         private const float CatchRelief = 2f;
         private const float MissPenalty = 4f;
