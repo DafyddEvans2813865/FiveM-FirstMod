@@ -15,17 +15,17 @@ namespace DredgeClient
         private const float EventRisePerSecond = 1.0f;  // extra while witnessing an event
         private const float CatchRelief = 2f;
         private const float MissPenalty = 4f;
-
-        private bool _wasAtDock;
+        private const float RegionDepletedRise = 3f;
 
         public DreadMeter()
         {
             EventHandlers["dredge:fishCaught"] += new Action<dynamic>(_ => Add(-CatchRelief));
             EventHandlers["dredge:fishLost"] += new Action(() => Add(MissPenalty));
-            EventHandlers["dredge:gameOver"] += new Action(() => GameState.Dread = 0f);
+            EventHandlers["dredge:regionDepleted"] += new Action(() => Add(RegionDepletedRise));
+            EventHandlers["dredge:gameOver"] += new Action(ResetAfterGameOver);
 
             // Debug: /dread 90
-            RegisterCommand("dread", new Action<int, System.Collections.Generic.List<object>, string>((src, args, raw) => { if (args.Count > 0 && float.TryParse(args[0].ToString(), out float v)) GameState.Dread = Clamp(v); }), false);
+            RegisterCommand("dread", new Action<int, System.Collections.Generic.List<object>, string>((src, args, raw) => { if (args.Count > 0 && float.TryParse(args[0].ToString(), out float v)) SetDread(v); }), false);
 
             Tick += OnTick;
         }
@@ -45,22 +45,46 @@ namespace DredgeClient
                 DrawMeter();
             }
 
-            // check if player trying to dock 
-            bool atDock = !GameState.AtSea && Vector3.DistanceSquared(ped.Position, GameState.DockPos) < GameState.DockRadius * GameState.DockRadius;
-            if (atDock && !_wasAtDock) ReturnToDock();
-            _wasAtDock = atDock;
+            // Check the boat position while aboard; otherwise use the player's position.
+            Vector3 dockCheckPosition = GameState.AtSea && ped.CurrentVehicle != null
+                ? ped.CurrentVehicle.Position
+                : ped.Position;
+            bool atDock = Vector3.DistanceSquared(dockCheckPosition, GameState.DockPos)
+                < GameState.DockRadius * GameState.DockRadius;
+
+            if (!atDock) GameState.HasLeftDock = true;
+            if (atDock && !GameState.WasAtDock && GameState.HasLeftDock) ReturnToDock();
+            GameState.WasAtDock = atDock;
 
             return Task.FromResult(0);
         }
 
         private void ReturnToDock()
         {
-            GameState.Dread = 0f;
+            SetDread(0f);
             TriggerEvent("dredge:fishSold");
             Screen.ShowNotification("You made it back. Catch sold.");
         }
 
-        private static void Add(float amount) => GameState.Dread = Clamp(GameState.Dread + amount);
+        private void ResetAfterGameOver()
+        {
+            SetDread(0f);
+            GameState.WasAtDock = false;
+            GameState.HasLeftDock = false;
+            TriggerEvent("dredge:dreadChanged", 0f);
+        }
+
+        private void Add(float amount) => SetDread(GameState.Dread + amount);
+
+        private void SetDread(float value)
+        {
+            float dread = Clamp(value);
+            if (Math.Abs(GameState.Dread - dread) < 0.001f) return;
+
+            GameState.Dread = dread;
+            TriggerEvent("dredge:dreadChanged", dread);
+        }
+
         private static float Clamp(float v) => Math.Max(0f, Math.Min(100f, v));
 
         private static void DrawMeter()

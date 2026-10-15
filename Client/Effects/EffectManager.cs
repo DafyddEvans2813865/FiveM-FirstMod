@@ -35,7 +35,7 @@ namespace DredgeClient.Effects
         public static DreadLevel CurrentLevel { get; private set; } = DreadLevel.Calm;
 
         // Chance per tick of the endgame firing while at Doom
-        private const double EndgameChance = 0.3;
+        private const double EndgameChance = 0.8;
 
         // Gap between scares
         private const int MinGap = 20000;

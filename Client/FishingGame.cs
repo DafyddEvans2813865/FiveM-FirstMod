@@ -40,8 +40,27 @@ namespace DredgeClient
 
         public FishingGame()
         {
-            EventHandlers["dredge:fishSold"] += new Action(() => FishCaught = 0);
+            EventHandlers["dredge:fishSold"] += new Action(ResetCatch);
+            EventHandlers["dredge:gameOver"] += new Action(ResetAfterGameOver);
             Tick += OnTick;
+        }
+
+        private void ResetCatch()
+        {
+            FishCaught = 0;
+            GameState.FishHeld = 0;
+        }
+
+        private void ResetAfterGameOver()
+        {
+            ResetCatch();
+            _state = State.Idle;
+            _timer = 0f;
+            _hitCount = 0;
+            _requiredHits = 0;
+            _regionFished = 0;
+            _regionDepleted = false;
+            _hasRegionCentre = false;
         }
 
         private Task OnTick()
@@ -53,7 +72,7 @@ namespace DredgeClient
 
             if (inBoat) UpdateFishingRegion(boat.Position);
 
-            bool canFish = inBoat && boat.Speed < 2f && !_regionDepleted; //nearly stopped
+            bool canFish = inBoat && boat.Speed < 4f && !_regionDepleted; //nearly stopped
 
             if (inBoat)
             {
@@ -175,8 +194,13 @@ namespace DredgeClient
                 if (_hitCount >= _requiredHits)
                 {
                     FishCaught++;
+                    GameState.FishHeld = FishCaught;
                     _regionFished++;
-                    if (_regionFished >= MaxFishPerRegion) _regionDepleted = true;
+                    if (_regionFished >= MaxFishPerRegion)
+                    {
+                        _regionDepleted = true;
+                        TriggerEvent("dredge:regionDepleted");
+                    }
                     _resultText = "Caught something...";
                     TriggerEvent("dredge:fishCaught", FishCaught);
                 }

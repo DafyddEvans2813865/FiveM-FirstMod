@@ -11,9 +11,11 @@ namespace DredgeClient
         public static bool EventRunning;     // a scare event is playing
         public static bool EndgameRunning;   // death sequence is playing 
         public static int FishHeld;          // TODO: FishingMinigame should keep this in sync with its count
+        public static bool WasAtDock;        // player was at the dock
+        public static bool HasLeftDock;      // player has left the dock
 
-        public static readonly Vector3 DockPos = new Vector3(-813.49f, -1485.70f, 0.0f);
-        public const float DockRadius = 15f;
+        public static readonly Vector3 DockPos = new Vector3(491.76f, -3410.70f, -1.0f);
+        public const float DockRadius = 30f;
     }
 
     //Drawing helpers

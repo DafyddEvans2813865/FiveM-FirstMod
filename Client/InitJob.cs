@@ -23,7 +23,7 @@ namespace DredgeClient
             RegisterCommand("Atmo", new Action(() => setAtmosphere()), false);
             //END OF TO-DO 
 
-            RegisterCommand("Start", new Action(async () => await StartJob()), false);
+            RegisterCommand("StartDredge", new Action(async () => await StartJob()), false);
         }
 
         private async Task ToDock()
@@ -32,7 +32,7 @@ namespace DredgeClient
             Game.PlayerPed.SetIntoVehicle(Boat, VehicleSeat.Driver);
 
             //DEBUG -> Speed up boat a little 
-            SetVehicleEnginePowerMultiplier(Boat.Handle, 1000.0f);
+            SetVehicleEnginePowerMultiplier(Boat.Handle, 10.0f);
         }
 
         //T0-DO change to call effects 
