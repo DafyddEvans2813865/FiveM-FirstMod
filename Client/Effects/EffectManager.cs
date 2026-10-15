@@ -40,6 +40,7 @@ namespace DredgeClient.Effects
         // Gap between scares
         private const int MinGap = 20000;
         private const int MaxGap = 60000;
+        private const float TugZAdjust = -0.5f; //ghost boat offset (origin is funky)
 
         public EffectsManager()
         {
@@ -50,6 +51,13 @@ namespace DredgeClient.Effects
             RegisterDebugCommands();
         }
 
+        private static readonly string[] RadioStations =
+        {
+            "RADIO_01_CLASS_ROCK", "RADIO_02_POP", "RADIO_03_HIPHOP_NEW", "RADIO_04_PUNK",
+            "RADIO_05_TALK_01", "RADIO_06_COUNTRY", "RADIO_07_DANCE_01", "RADIO_08_MEXICAN",
+            "RADIO_09_HIPHOP_OLD", "RADIO_12_REGGAE", "RADIO_13_JAZZ", "RADIO_15_MOTOWN"
+        };
+
         private List<ScareEvent> BuildEvents()
         {
             return new List<ScareEvent>
@@ -57,25 +65,49 @@ namespace DredgeClient.Effects
                 //Level 1
                 new ScareEvent { Name = "debris", Weight = 5, MinLevel = DreadLevel.Calm, Run = boat => Spawner.SpawnAndMove("prop_barrel_02a", Offset(boat, 15, 40), Offset(boat, 15, -40), 1.5f) },
                 new ScareEvent { Name = "shorelight", Weight = 4, MinLevel = DreadLevel.Calm, Run = boat => WorldState.FlickerLight(Offset(boat, 0, 120, 5), 10000, range: 40f, intensity: 15f) },
-                new ScareEvent { Name = "jolt", Weight = 4, MinLevel = DreadLevel.Calm, Run = boat => CameraFx.ShakeCamera("JOLT_SHAKE", 1.5f, 600) },
+                new ScareEvent { Name = "jolt", Weight = 4, MinLevel = DreadLevel.Calm, Run = boat => Task.WhenAll(CameraFx.ShakeCamera("JOLT_SHAKE", 1.5f, 600),BoatFx.Jolt(boat, 4f)) },
  
                 //Level 2
-                new ScareEvent { Name = "ghostboat", Weight = 3, MinLevel = DreadLevel.Uneasy, Run = boat => Spawner.SpawnAndMove("tug", Offset(boat, -150, 150), Offset(boat, 150, 150), 4f) },
-                new ScareEvent { Name = "enginecut", Weight = 3, MinLevel = DreadLevel.Uneasy, Run = boat => WorldState.KillEngine(boat, 3000) },
+                
+                new ScareEvent { Name = "ghostboat", Weight = 3, MinLevel = DreadLevel.Uneasy, Run = boat => Spawner.SpawnAndMove("tug", OnWater(Offset(boat, -150, 150), TugZAdjust),OnWater(Offset(boat, 150, 150), TugZAdjust), 4f) },
+                new ScareEvent { Name = "enginecut", Weight = 3, MinLevel = DreadLevel.Uneasy, Run = boat =>
+                {
+                    PlaySoundFromEntity(-1, "Engine_fail", boat, "DLC_PILOT_ENGINE_FAILURE_SOUNDS", false, 0); // untested sound, swap if silent
+                    return Task.WhenAll(
+                        CameraFx.ShakeCamera("JOLT_SHAKE", 0.6f, 400),
+                        WorldState.KillEngine(boat, 3000));
+                }},
+
                 new ScareEvent { Name = "lightscut", Weight = 3, MinLevel = DreadLevel.Uneasy, Run = boat => WorldState.KillLights(boat, 4000) },
-                new ScareEvent { Name = "tremor", Weight = 2, MinLevel = DreadLevel.Uneasy, Run = boat => CameraFx.ShakeCamera("VIBRATE_SHAKE", 0.8f, 3000) },
+                new ScareEvent { Name = "tremor", Weight = 2, MinLevel = DreadLevel.Uneasy, Run = boat => Task.WhenAll(
+                    CameraFx.ShakeCamera("VIBRATE_SHAKE", 0.8f, 3000),
+                    BoatFx.Rock(boat, 3000, 1.2f)) },
  
                 //Level 3
                 new ScareEvent { Name = "blackout", Weight = 2, MinLevel = DreadLevel.Fearful, Run = async boat =>
                 {
                     WorldState.SetBlackout(true);
-                    await Delay(8000);
+                    await Task.WhenAll(
+                        ScreenFx.Dim(8000, 200),
+                        WorldState.KillLights(boat, 8000));
                     WorldState.SetBlackout(false);
+                }},
+
+                new ScareEvent { Name = "radio", Weight = 3, MinLevel = DreadLevel.Uneasy, Run = async boat =>
+                {
+                    SetVehicleRadioEnabled(boat, true);
+                    int hops = _rng.Next(4, 8);
+                    for (int i = 0; i < hops; i++)
+                    {
+                        SetVehRadioStation(boat, RadioStations[_rng.Next(RadioStations.Length)]);
+                        await Delay(_rng.Next(250, 600));
+                    }
                 }},
  
                 // hull hit + engine dies
                 new ScareEvent { Name = "impact", Weight = 2, MinLevel = DreadLevel.Fearful, Run = boat => Task.WhenAll(
                     CameraFx.ShakeCamera("MEDIUM_EXPLOSION_SHAKE", 1f, 800),
+                    BoatFx.Jolt(boat, 8f),
                     WorldState.KillEngine(boat, 4000)) },
  
                 //Level 4
@@ -84,8 +116,10 @@ namespace DredgeClient.Effects
                 {
                     WorldState.SetBlackout(true);
                     await Task.WhenAll(
-                        WorldState.FlickerLight(Offset(boat, -40, 100, 3), 8000, 120, 255, 140, 30f, 12f), // sickly green
-                        WorldState.KillEngine(boat, 5000));
+                        ScreenFx.Dim(9000, 225),
+                        WorldState.KillLights(boat, 9000),
+                        WorldState.KillEngine(boat, 9000),
+                        WorldState.FlickerLight(Offset(boat, -15, 35, 2), 8000, 120, 255, 140, 25f, 30f)); // sickly green
                     WorldState.SetBlackout(false);
                 }},
             };
@@ -171,6 +205,15 @@ namespace DredgeClient.Effects
             return GetOffsetFromEntityInWorldCoords(boat, x, y, z);
         }
 
+        // Attempt to make ghost boat less buggy 
+        private static Vector3 OnWater(Vector3 pos, float zAdjust = 0f)
+        {
+            float h = 0f;
+            if (GetWaterHeight(pos.X, pos.Y, pos.Z + 5f, ref h))
+                pos.Z = h + zAdjust;
+            return pos;
+        }
+
         // DEBUG 
         // /scare <name>  fires scare 
         // /scares        toggles random scares 
@@ -199,7 +242,7 @@ namespace DredgeClient.Effects
                 Debug.WriteLine($"[Effects] random scares {(_enabled ? "ON" : "OFF")}");
             }), false);
 
-            RegisterCommand("clear", new Action<int, List<object>, string>((src, args, raw) =>
+            RegisterCommand("clearDredge", new Action<int, List<object>, string>((src, args, raw) =>
             {
                 WorldState.Reset();
                 StopGameplayCamShaking(true);
