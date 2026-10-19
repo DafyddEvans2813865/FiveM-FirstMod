@@ -29,6 +29,8 @@ namespace DredgeClient
         private async Task ToDock()
         {
             var Boat = await World.CreateVehicle("tug", GameState.DockPos, 120);
+            if (Boat == null) return;
+
             Game.PlayerPed.SetIntoVehicle(Boat, VehicleSeat.Driver);
 
             //DEBUG -> Speed up boat a little 
